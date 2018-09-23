@@ -191,6 +191,10 @@ where $\Omega = \begin{pmatrix} \omega_{11} & \omega_{12} \\ \omega_{12} & \omeg
 In higher dimensions, this inner part corresponds with the cross product/second moment of the data, so that we can optimize code by passing the second moment as an argument.  
 \\
 
+Take the singular value decomposition of $\gamma$:
+\[ \gamma = U S V' \]
+where $U$ and $V$ 
+
 The likelihood is combined with an improper flat prior:
 \[
 \pi(\beta, \gamma) \propto \sum_{i=1}^{k} \log(\text{diag}(d)) \equiv f(\gamma)

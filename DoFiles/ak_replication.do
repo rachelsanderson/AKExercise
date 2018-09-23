@@ -83,16 +83,19 @@ graph export wage_ols.pdf, replace
 cd `tex'
 
 eststo clear
-eststo iv1: ivreg2 logwage (educ = i.qob), r first savefirst savefprefix(first)
+eststo iv1: quietly ivreg2 logwage (educ = i.qob), r first savefirst savefprefix(first)
+estadd local hasPOB "No"
 matrix first1 = e(first) 
 
 //IV with X=[educ highSchool] 
-eststo iv2: ivreg2 logwage (educ highSchool = i.qob), r first savefirst savefprefix(first)
+eststo iv2: quietly ivreg2 logwage (educ highSchool = i.qob), r first savefirst savefprefix(first)
+estadd local hasPOB "No"
 matrix first2 = e(first)
 
 //IV with x=[educ], with pob dummies etc. 
 eststo iv3: quietly ivreg2 logwage (educ = i.qob) yob31-yob39 dpob*, r
+estadd local hasPOB "Yes"
 eststo iv4: quietly ivreg2 logwage (educ highSchool = i.qob) yob31-yob39 dpob*, r
-
-esttab iv1 iv2 iv3 iv4 using iv.tex, drop(dpob* yob*) replace se longtable nodepvars booktabs gaps f nostar
+estadd local hasPOB "Yes"
+esttab iv1 iv2 iv3 iv4 using iv.tex, drop(dpob* yob*) replace se longtable nodepvars booktabs gaps f nostar scalars("YoB, PoB dummies")
 esttab first1 first2 using firststage.tex
