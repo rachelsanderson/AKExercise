@@ -1,5 +1,5 @@
 ivmcmc2 <- function(bg0, Vyxwz, nobs, nx, nw, nz, flatrf=TRUE, H, nit) {
-  lh0 <- -ivlh2(bg0, Vyxwz, nobs, nx, nw, nz, flatrf)
+  lh0 <- -ivlh_faster(bg0, Vyxwz, nobs, nx, nw, nz, flatrf)
   mcdraws <- matrix(0, nit, length(bg0) + 1)
   bg <- bg0
   lh <- lh0
@@ -9,7 +9,7 @@ ivmcmc2 <- function(bg0, Vyxwz, nobs, nx, nw, nz, flatrf=TRUE, H, nit) {
   accrate <- 1
   for (it in 1:(nit-1)) {
     bgnew <- bg + crossprod(Hfac, rnorm(npar))
-    lhnew <- -ivlh2(bgnew, Vyxwz, nobs, nx, nw, nz, flatrf)
+    lhnew <- -ivlh_faster(bgnew, Vyxwz, nobs, nx, nw, nz, flatrf)
     if(exp(lhnew - lh) > runif(1) ) {
       bg <- bgnew
       lh <- lhnew
@@ -17,7 +17,7 @@ ivmcmc2 <- function(bg0, Vyxwz, nobs, nx, nw, nz, flatrf=TRUE, H, nit) {
     } else {
       accrate <- .9 * accrate
     }
-    if (it %% 200 == 1) print(paste("accrate: ", accrate, "it+1:", it+1))
+    if (it %% 1000 == 1) print(paste("accrate: ", accrate, "it+1:", it+1))
     mcdraws[it + 1, ] <- c(bg, lh)
   }
   return(mcdraws)

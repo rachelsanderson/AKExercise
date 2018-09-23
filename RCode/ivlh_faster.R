@@ -14,7 +14,7 @@
 #' @param nw Number of right-hand side exogenous variables
 #' @param nz Number of exogenous variables not appearing in the y equation
 #' 
-ivlh2 <- function(bg, Vyxwz, nobs, nx, nw, nz, flatrf=TRUE) {
+ivlh_faster <- function(bg, Vyxwz, nobs, nx, nw, nz, flatrf=TRUE) {
   Vscale <- sqrt(diag(Vyxwz))
   beta <- bg[1:(nx + nw)]
   gamma <- bg[nx + nw + 1:(nx * (nw + nz))]
