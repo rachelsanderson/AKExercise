@@ -16,7 +16,7 @@ do_mcmc <- function(y, x, w, z, nx, nw, nz, its){
 
         #do 100k reps to get a better jump
         draws = ivmcmc2(opt$xh, Vyxwz, nobs, nx, nw, nz, flatrf=TRUE, H0, nit=100000)
-        newHess = 0.3*cov(draws[,1:6])
+        newHess = cov(draws[,1:length(bg0)])
 
         newDraws = ivmcmc2(opt$xh, Vyxwz, nobs, nx, nw, nz, flatrf=TRUE, newHess, nit=its)
         return(newDraws)
