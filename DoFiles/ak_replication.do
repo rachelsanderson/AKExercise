@@ -95,4 +95,4 @@ eststo iv3: quietly ivreg2 logwage (educ = i.qob) yob31-yob39 dpob*, r
 eststo iv4: quietly ivreg2 logwage (educ highSchool = i.qob) yob31-yob39 dpob*, r
 
 esttab iv1 iv2 iv3 iv4 using iv.tex, drop(dpob* yob*) replace se longtable nodepvars booktabs gaps f nostar
-
+esttab first1 first2 using firststage.tex
